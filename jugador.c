@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     char palabraSecreta[6];
     strcpy(palabraSecreta, argv[1]);
 
-
+    system("clear");
     char tablero[6][6];
     limpiarTablero(tablero);
     imprimirTablero (tablero, palabraSecreta);    
@@ -29,6 +29,7 @@ int main(int argc, char *argv[]) {
         while(strlen(buffer) != 5){
             printf("Ingrese una frase de 6 caracteres:");
             scanf("%s", buffer);
+            //al poner ctrl + d se bugea
         }
         bandera = jugarPalabra (tablero, buffer, palabraSecreta, i);
         system("clear");
@@ -36,9 +37,9 @@ int main(int argc, char *argv[]) {
     }
 
     if(bandera)
-        printf("Has ganado!");
+        printf("Has ganado!\n");
     else
-        printf("Perdiste!");
+        printf("Perdiste!\n");
 
     return 1;
 }
