@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
         printf("Ingrese palabra a jugar: ");
         scanf("%s", buffer);
         while(strlen(buffer) != 5){
-            printf("Ingrese una frase de 6 caracteres:");
+            printf("Ingrese una frase de 5 caracteres:");
             scanf("%s", buffer);
             //al poner ctrl + d se bugea
         }
@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     if(bandera)
         printf("Has ganado!\n");
     else
-        printf("Perdiste!\n");
+        printf("Perdiste! La palabra era: %s\n", palabraSecreta);
 
     return 1;
 }
