@@ -1,0 +1,1 @@
+void leerArchivo(char* nombreArchivo, Registro** registros, int* tam);
