@@ -1,0 +1,5 @@
+perro,5
+arbol,3
+cacas,2
+amore,0
+mateo,4
