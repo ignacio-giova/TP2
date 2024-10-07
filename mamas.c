@@ -19,27 +19,24 @@ Heap* conversion(Registro* base, Heap* _base, int lineas);
 int size(Heap* a);
 void liberarHeap(Heap* a);
 
-//para probar
-void imprimirArr(Registro* a, int lineas);
-void imprimirPreorden(Heap* a);
-
 int main() {
     int lineas = 0; //cantidad de datos
-    Registro* base = transformarArchivo("holis.txt", &lineas);
+    Registro* base = transformarArchivo("2.txt", &lineas);
   
     if (base == NULL) {
         printf("No se pudo cargar la base de datos.\n");
         return 1;
     }
 
+    // Imprimir los registros
+    printf("Base de datos:\n");
+    for (int i = 0; i < lineas; i++) {
+        printf("Nombre: %s; Frecuencia: %d\n", base[i].palabra, base[i].frecuencia);
+    }
+
     // Crear el heap
     Heap* _base = NULL;
     _base = conversion(base, _base, lineas);
-
-    // Imprimir los registros
-    imprimirArr(base, lineas);
-    printf("\n");
-    imprimirPreorden(_base);
 
     // Liberar la memoria
     free(base);  
@@ -132,27 +129,4 @@ void liberarHeap(Heap* a) {
     liberarHeap(a->izq);
     liberarHeap(a->der);
     free(a);
-}
-
-void imprimirArr(Registro* a, int lineas){
-    printf("Base de datos:\n");
-    for (int i = 0; i < lineas; i++) {
-        printf("Nombre: %s; Frecuencia: %d\n", a[i].palabra, a[i].frecuencia);
-    }
-
-}
-
-void imprimirPreorden(Heap* a) {
-    if (a == NULL) {
-        return;
-    }
-
-    // Imprimir el nodo actual (la raíz)
-    printf("Nombre: %s; Frecuencia: %d\n", a->dato.palabra, a->dato.frecuencia);
-
-    // Recorrer el subárbol izquierdo
-    imprimirPreorden(a->izq);
-
-    // Recorrer el subárbol derecho
-    imprimirPreorden(a->der);
 }
