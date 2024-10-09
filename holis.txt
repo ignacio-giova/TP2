@@ -1,7 +1,0 @@
-perro,3
-arbol,1
-cacas,2
-amore,0
-mateo,4
-marco,6
-matia,10

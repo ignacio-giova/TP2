@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "jugador.h"
-
-#define GREEN "\x1b[32m"
-#define ORANGE "\x1b[33m" 
-#define RESET "\x1b[0m"
 
 int main(int argc, char *argv[]) {
     if (argc != 2 || strlen(argv[1]) != 5){
@@ -21,16 +14,15 @@ int main(int argc, char *argv[]) {
     limpiarTablero(tablero);
     imprimirTablero (tablero, palabraSecreta);    
 
+    MaxHeap *heap = transformarArchivo("2.txt");
+    Filtro *filtro;
+    inicializarFiltro(filtro);
+
+
     int bandera = 0;
-    char buffer[6];
+    char *buffer;
     for(int i=0; i <= 6 && !bandera; i++){
-        printf("Ingrese palabra a jugar: ");
-        scanf("%s", buffer);
-        while(strlen(buffer) != 5){
-            printf("Ingrese una frase de 5 caracteres:");
-            scanf("%s", buffer);
-            //al poner ctrl + d se bugea
-        }
+        sugerirPalabra(buffer, heap, filtro, palabraSecreta);
         bandera = jugarPalabra (tablero, buffer, palabraSecreta, i);
         system("clear");
         imprimirTablero (tablero, palabraSecreta); 
@@ -41,6 +33,8 @@ int main(int argc, char *argv[]) {
     else
         printf("Perdiste! La palabra era: %s\n", palabraSecreta);
 
+
+    freeHeap(heap);
     return 1;
 }
 void limpiarTablero (char tablero[6][6]){
