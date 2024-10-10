@@ -40,10 +40,11 @@ void sugerirPalabra(char *buffer, MaxHeap *heap, Filtro *filtro, char *palabraSe
         return;
     }
     Registro aux = getMax(heap);
-    deleteMax(heap); //Eliminamos palabra que ya usamos
+    deleteMax(heap);
     actualizarFiltro(filtro, aux.palabra, palabraSecreta);
     strcpy(buffer, aux.palabra);
-
+    
+    // Actualizar el heap original
 }
 
 MaxHeap* filtrarHeap (MaxHeap *a, Filtro* filtro){
@@ -57,6 +58,7 @@ MaxHeap* filtrarHeap (MaxHeap *a, Filtro* filtro){
         deleteMax(a);
         return filtrarHeap(a, filtro);
     }
+
 }
 
 

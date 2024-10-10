@@ -23,19 +23,19 @@ int main(int argc, char *argv[]) {
     for(int i=0; i <= 6 && !bandera; i++){
         sugerirPalabra(buffer, heap, filtro, palabraSecreta);
         if (strlen(buffer) == 0) {
-             printf("No se pudo sugerir una palabra.\n");
             bandera = 2;
-            break; // Sale del ciclo si no hay sugerencia
         }
+        else{
         bandera = jugarPalabra (tablero, buffer, palabraSecreta, i);
         system("clear");
         imprimirTablero (tablero, palabraSecreta); 
+        }
     }
 
     if(bandera == 1)
         printf("Has ganado!\n");
     else if (bandera == 2)
-        printf("No se conoce la palabra");
+        printf("No se conoce la palabra\n");
         else
         printf("Perdiste! La palabra era: %s\n", palabraSecreta);
 
@@ -51,7 +51,7 @@ void limpiarTablero (char tablero[6][6]){
 }
 
 void imprimirTablero (char tablero[6][6], char palabraSecreta[6]){
-    for(int i=0; i <=6 ; i++){
+    for(int i=0; i <6 ; i++){
         if (tablero[i][0] == '_'){
             printf("%s \n", tablero[i]);
         }

@@ -4204,7 +4204,7 @@ siseo,3
 sismo,1
 sison,5
 sitio,4
-sobar,7
+sobar,5
 sobeo,0
 sobon,3
 sobra,0
