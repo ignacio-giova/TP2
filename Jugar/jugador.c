@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     int bandera = 0;
     char buffer[TAM_PALABRA + 1];
-    for(int i=0; i <= 6 && !bandera; i++){
+    for(int i=0; i < 6 && !bandera; i++){
         sugerirPalabra(buffer, heap, filtro, palabraSecreta);
         if (strlen(buffer) == 0) {
             bandera = 2;
