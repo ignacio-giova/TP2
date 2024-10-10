@@ -33,16 +33,21 @@ MaxHeap* transformarArchivo(char* nombreArchivo) {
     return heap;
 }
 
-char *sugerirPalabra(char *buffer, MaxHeap *heap, Filtro *filtro, char *palabraSecreta){
-    Registro aux = getMax(heap);
+void sugerirPalabra(char *buffer, MaxHeap *heap, Filtro *filtro, char *palabraSecreta){
     heap = filtrarHeap(heap, filtro);
+    if(isEmpty(heap)){
+        buffer[0] = '\0';
+        return;
+    }
+    Registro aux = getMax(heap);
+    deleteMax(heap); //Eliminamos palabra que ya usamos
     actualizarFiltro(filtro, aux.palabra, palabraSecreta);
     strcpy(buffer, aux.palabra);
 
 }
 
 MaxHeap* filtrarHeap (MaxHeap *a, Filtro* filtro){
-    if(isEmpty(a) || a == NULL )
+    if(isEmpty(a))
         return NULL;
 
     Registro aux = getMax(a);
@@ -66,7 +71,6 @@ int verificarPalabra(const char *palabra, Filtro *filtro) {
     // Verificar letras amarillas
      for(int i = 0; i < 5 && filtro->letrasAmarillas[i].letra != '_'; i++){
         int encontro = 0;
-        printf("Corte 8\n");
         for (int j= 0; j < TAM_PALABRA && !encontro; j++){
             if (filtro->letrasAmarillas[i].posiciones[j] //Verifica que sea una posicion posible de la letra
             && filtro->letrasAmarillas[i].letra == palabra[j] //Verifica que las letras sean iguales
@@ -87,7 +91,12 @@ int verificarPalabra(const char *palabra, Filtro *filtro) {
     return 1; // Si pasa todas las verificaciones, es válida
 }
 
-void inicializarFiltro(Filtro *filtro) {
+Filtro* inicializarFiltro() {
+    Filtro *filtro = malloc(sizeof(Filtro));
+    if (filtro == NULL) {
+    // Manejo de error de memoria
+    }
+
     // Inicializar letras verdes con '_'
     for (int i = 0; i < TAM_PALABRA; i++) {
         filtro->letrasVerdes[i] = '_';
@@ -105,6 +114,8 @@ void inicializarFiltro(Filtro *filtro) {
     for (int i = 0; i < 26; i++) {
         filtro->letrasNoIncluidas[i] = 0;  // Ninguna letra excluida inicialmente
     }
+
+    return filtro;
 }
 
 void actualizarFiltro(Filtro *filtro, const char *palabra, const char *palabraSecreta){
@@ -174,6 +185,7 @@ void actualizarFiltro(Filtro *filtro, const char *palabra, const char *palabraSe
         if(aux[i] != '_')
             filtro->letrasNoIncluidas[aux[i] - 'a'] = 1;
     }
+
 }
 
 

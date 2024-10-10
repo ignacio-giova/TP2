@@ -14,27 +14,34 @@ int main(int argc, char *argv[]) {
     limpiarTablero(tablero);
     imprimirTablero (tablero, palabraSecreta);    
 
-    MaxHeap *heap = transformarArchivo("2.txt");
-    Filtro *filtro;
-    inicializarFiltro(filtro);
+    MaxHeap *heap = transformarArchivo("3.txt");
+    Filtro *filtro = inicializarFiltro();
 
 
     int bandera = 0;
-    char *buffer;
+    char buffer[TAM_PALABRA + 1];
     for(int i=0; i <= 6 && !bandera; i++){
         sugerirPalabra(buffer, heap, filtro, palabraSecreta);
+        if (strlen(buffer) == 0) {
+             printf("No se pudo sugerir una palabra.\n");
+            bandera = 2;
+            break; // Sale del ciclo si no hay sugerencia
+        }
         bandera = jugarPalabra (tablero, buffer, palabraSecreta, i);
         system("clear");
         imprimirTablero (tablero, palabraSecreta); 
     }
 
-    if(bandera)
+    if(bandera == 1)
         printf("Has ganado!\n");
-    else
+    else if (bandera == 2)
+        printf("No se conoce la palabra");
+        else
         printf("Perdiste! La palabra era: %s\n", palabraSecreta);
 
 
     freeHeap(heap);
+    free(filtro);
     return 1;
 }
 void limpiarTablero (char tablero[6][6]){

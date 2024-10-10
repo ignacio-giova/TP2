@@ -60,7 +60,7 @@ void deleteMax(MaxHeap* heap) {
 }
 
 int isEmpty(MaxHeap *heap){
-    if(heap->size == 0)
+    if(heap->size == 0 || heap == NULL)
         return 1;
     else
         return 0;

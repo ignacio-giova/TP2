@@ -11,7 +11,7 @@ typedef struct {
 } Letra;
 
 typedef struct {
-    char letrasVerdes[TAM_PALABRA]; // Letras en la posición correcta
+    char letrasVerdes[5]; // Letras en la posición correcta
     Letra letrasAmarillas[5]; // A lo sumo habra 5 letras amarillas
     int letrasNoIncluidas[26]; // Letras que no están en la palabra
 } Filtro;
@@ -20,13 +20,13 @@ typedef struct {
 MaxHeap* transformarArchivo(char* nombreArchivo);
 //transforma la base de datos en arreglo de estructura dinamico, para almacenar los datos
 
-char *sugerirPalabra(char *buffer, MaxHeap *heap, Filtro *filtro, char *palabraSecreta);
+void sugerirPalabra(char *buffer, MaxHeap *heap, Filtro *filtro, char *palabraSecreta);
 
 MaxHeap* filtrarHeap (MaxHeap *a, Filtro* filtro);
 
 int verificarPalabra(const char *palabra, Filtro *filtro);
 
-void inicializarFiltro(Filtro *filtro);
+Filtro* inicializarFiltro();
 
 void actualizarFiltro(Filtro *filtro, const char *palabra, const char *palabraSecreta);
 
