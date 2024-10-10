@@ -1,5 +1,0 @@
-casas,5
-letra,3
-perro,5
-goles,1
-marzo,10

@@ -5,10 +5,8 @@ int main() {
 
     char palabraSecreta[TAM_PALABRA + 1] = "sobar";
 
-    actualizarFiltro(filtro, "abasi", palabraSecreta);
     imprimirFiltro(filtro);
-
-    actualizarFiltro(filtro, "basal", palabraSecreta);
+    actualizarFiltro(filtro, "abasi", palabraSecreta);
     imprimirFiltro(filtro);
     
 
