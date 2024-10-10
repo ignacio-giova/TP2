@@ -1,65 +1,19 @@
-#include "maquina.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-MaxHeap* transformarArchivo(char* nombreArchivo) { 
-    FILE* fd = fopen(nombreArchivo, "r");  // Abrimos el archivo en modo lectura
-    if (fd == NULL) {
-        printf("No se pudo abrir el archivo.\n");
-        return NULL;
-    }
+#define TAM_PALABRA 5
 
-    // Contar líneas
-    int lineas = 1; //consideramos la primera linea
-    char c;
-    while ((c = fgetc(fd)) != EOF) {
-        if (c == '\n') {
-            (lineas)++;
-        }
-    }
+typedef struct {
+    char letra;
+    int posiciones[5]; //Una letra en amarillo solo puede ocupar 5 espacios
+} Letra;
 
-    // Reiniciar el puntero de archivo
-    fseek(fd, 0, SEEK_SET);
-
-    // Reservar memoria para los registros
-    MaxHeap *heap = createHeap(lineas);
-
-    // Leer registros
-    Registro buffer;
-    for (int i = 0; i < (lineas); i++) { 
-        fscanf(fd, "%5[^,],%d\n", buffer.palabra, &buffer.frecuencia);
-        insert(heap, buffer);
-    }
-
-    fclose(fd);  // Cerrar el archivo
-    return heap;
-}
-
-void sugerirPalabra(char *buffer, MaxHeap *heap, Filtro *filtro, char *palabraSecreta){
-    heap = filtrarHeap(heap, filtro);
-    if(isEmpty(heap)){
-        buffer[0] = '\0';
-        return;
-    }
-    Registro aux = getMax(heap);
-    deleteMax(heap);
-    actualizarFiltro(filtro, aux.palabra, palabraSecreta);
-    strcpy(buffer, aux.palabra);
-    
-    // Actualizar el heap original
-}
-
-MaxHeap* filtrarHeap (MaxHeap *a, Filtro* filtro){
-    if(isEmpty(a))
-        return NULL;
-
-    Registro aux = getMax(a);
-    if(verificarPalabra(aux.palabra, filtro))
-        return a;
-    else{
-        deleteMax(a);
-        return filtrarHeap(a, filtro);
-    }
-
-}
+typedef struct {
+    char letrasVerdes[5]; // Letras en la posición correcta
+    Letra letrasAmarillas[5]; // A lo sumo habra 5 letras amarillas
+    int letrasNoIncluidas[26]; // Letras que no están en la palabra
+} Filtro;
 
 
 int verificarPalabra(const char *palabra, Filtro *filtro) {
@@ -71,17 +25,16 @@ int verificarPalabra(const char *palabra, Filtro *filtro) {
     }
     
     // Verificar letras amarillas
-     for(int i = 0; i < 5 && filtro->letrasAmarillas[i].letra != '_'; i++){
+    for(int i = 0; i < TAM_PALABRA && filtro->letrasAmarillas[i].letra != '_'; i++){
         int encontro = 0;
         for (int j= 0; j < TAM_PALABRA && !encontro; j++){
-            if (filtro->letrasAmarillas[i].posiciones[j] //Verifica que sea una posicion posible de la letra
-            && filtro->letrasAmarillas[i].letra == palabra[j] //Verifica que las letras sean iguales
-            && filtro->letrasVerdes[j] == '_') // Verifica que no sea una letra verde
-            encontro = 1;
+            if(filtro->letrasAmarillas[i].posiciones[j] 
+                && palabra[j] == filtro->letrasAmarillas[i].letra)
+                encontro = 1;
         }
-        if (!encontro)
+        if (encontro)
             return 0;
-     }
+    }
 
     // Verificamos letras no incluidas
     for (int i = 0; i < TAM_PALABRA; i++) {
@@ -173,7 +126,7 @@ void actualizarFiltro(Filtro *filtro, const char *palabra, const char *palabraSe
         }
     }
  
-    
+
     // Letras No Incluidas
     for(int i= 0; i < TAM_PALABRA; i++){
         if(aux[i] != '_')
@@ -208,4 +161,24 @@ void imprimirFiltro(Filtro *filtro) {
         }
     }
     printf("\n");
+}
+
+
+int main() {
+    Filtro* filtro = inicializarFiltro();
+
+    char palabraSecreta[TAM_PALABRA + 1] = "sobar";
+    
+    actualizarFiltro(filtro, "abasi", palabraSecreta);
+    imprimirFiltro(filtro);
+
+    printf("Conoce la palabra: %i\n", verificarPalabra("basal" , filtro));
+
+    actualizarFiltro(filtro, "basal", palabraSecreta);
+    imprimirFiltro(filtro);
+
+    printf("Conoce la palabra: %i\n", verificarPalabra("untar" , filtro));
+
+    return 0;
+
 }

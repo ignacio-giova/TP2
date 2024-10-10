@@ -1,0 +1,23 @@
+for (int i = 0; i < TAM_PALABRA; i++) {
+        if (filtro->letrasAmarillas[i].letra != '_') {
+            for (int j = 0; j < TAM_PALABRA; j++) {
+                if (filtro->letrasAmarillas[i].letra == palabra[j]) {
+                    filtro->letrasAmarillas[i].posiciones[j] = 0; // Elimina la posición donde ya apareció en la palabra
+                }
+            }
+        }
+    }
+
+
+// Verificar letras amarillas
+     for(int i = 0; i < 5 && filtro->letrasAmarillas[i].letra != '_'; i++){
+        int encontro = 0;
+        for (int j= 0; j < TAM_PALABRA && !encontro; j++){
+            if (filtro->letrasAmarillas[i].posiciones[j] //Verifica que sea una posicion posible de la letra
+            && filtro->letrasAmarillas[i].letra == palabra[j] //Verifica que las letras sean iguales
+            && filtro->letrasVerdes[j] == '_') // Verifica que no sea una letra verde
+            encontro = 1;
+        }
+        if (!encontro)
+            return 0;
+     }
