@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#define TAM_PALABRA 6
 
 typedef struct {
-    char palabra[6];
+    char palabra[TAM_PALABRA];
     int frecuencia;
 } Registro;
 
@@ -15,6 +18,8 @@ typedef struct {
 
 void swap(Registro* a, Registro* b);
 //intercambia dos elementos de tipo Registro
+
+int compareRegistros(Registro* a, Registro* b);
 
 Registro getMax(MaxHeap* heap);
 //obtiene el maximo elemento del Heap de tipo Registro

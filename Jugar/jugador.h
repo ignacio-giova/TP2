@@ -4,10 +4,12 @@
 #define ORANGE "\x1b[33m" 
 #define RESET "\x1b[0m"
 
-void limpiarTablero (char tablero[6][6]);
+#define INTENTOS 6
 
-void imprimirTablero (char tablero[6][6], char palabraSecreta[6]);
+void limpiarTablero (char tablero[INTENTOS][TAM_PALABRA]);
 
-void imprimirAColor (char frase[6], char palabraSecreta[6]);
+void imprimirTablero (char tablero[INTENTOS][TAM_PALABRA], char palabraSecreta[TAM_PALABRA]);
 
-int jugarPalabra (char tablero[6][6], char palabra[6], char palabraSecreta[6], int intento);
+void imprimirAColor (char frase[TAM_PALABRA], char palabraSecreta[TAM_PALABRA]);
+
+int jugarPalabra (char tablero[INTENTOS][TAM_PALABRA], char palabra[TAM_PALABRA], char palabraSecreta[TAM_PALABRA], int intento);

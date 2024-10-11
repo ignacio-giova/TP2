@@ -1,18 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../ED_Heap/heap.h"
-
-#define TAM_PALABRA 5
 
 typedef struct {
     char letra;
-    int posiciones[5]; //Una letra en amarillo solo puede ocupar 5 espacios
+    int posiciones[TAM_PALABRA]; //Una letra en amarillo solo puede ocupar 5 espacios
 } Letra;
 
 typedef struct {
-    char letrasVerdes[5]; // Letras en la posición correcta
-    Letra letrasAmarillas[5]; // A lo sumo habra 5 letras amarillas
+    char letrasVerdes[TAM_PALABRA]; // Letras en la posición correcta
+    Letra letrasAmarillas[TAM_PALABRA]; // A lo sumo habra 5 letras amarillas
     int letrasNoIncluidas[26]; // Letras que no están en la palabra
 } Filtro;
 

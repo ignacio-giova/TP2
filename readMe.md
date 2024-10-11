@@ -29,6 +29,7 @@ Esto está ordenado jerárquicamente: **Jugar** depende de las funciones de **M�
 
 Aquí están las implementaciones del Heap, las cuales son:
 
+- **compareRegistros**: Va a determinar que registro tiene mayor prioridad. Primero evalua según frecuencia, si son iguales va a evaluar cual es alfabeticamente mayor.
 - **swap**: Intercambia el valor de dos elementos.
 - **getMax**: Toma la raíz del heap.
 - **insert**: Inserta el elemento en el heap, cumpliendo las propiedades del Heap.

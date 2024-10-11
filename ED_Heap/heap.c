@@ -1,5 +1,13 @@
 #include "heap.h"
 
+int compareRegistros(Registro* a, Registro* b) {
+    if (a->frecuencia != b->frecuencia) {
+        return a->frecuencia - b->frecuencia;
+    }
+    // Si las frecuencias son iguales, comparamos las palabras
+    return strcmp(b->palabra, a->palabra);  // Nota: b antes que a para orden alfabético descendente
+}
+
 // Función auxiliar para intercambiar dos elementos
 void swap(Registro* a, Registro* b) {
     Registro temp = *a;
@@ -17,13 +25,11 @@ void insert(MaxHeap* heap, Registro value) {
         return;   
     }
 
-    // Añadir el nuevo valor al final del heap
     heap->data[heap->size] = value;
     heap->size++;
 
-    // Subir el valor si es necesario
     int i = heap->size - 1;
-    while (i > 0 && heap->data[i].frecuencia > heap->data[(i - 1) / 2].frecuencia) {
+    while (i > 0 && compareRegistros(&heap->data[i], &heap->data[(i - 1) / 2]) > 0) {
         swap(&heap->data[i], &heap->data[(i - 1) / 2]);
         i = (i - 1) / 2;
     }
@@ -34,9 +40,9 @@ void heapify(MaxHeap* heap, int i) {
     int right = 2 * i + 2;
     int largest = i;
 
-    if (left < heap->size && heap->data[left].frecuencia > heap->data[largest].frecuencia)
+    if (left < heap->size && compareRegistros(&heap->data[left], &heap->data[largest]) > 0)
         largest = left;
-    if (right < heap->size && heap->data[right].frecuencia > heap->data[largest].frecuencia)
+    if (right < heap->size && compareRegistros(&heap->data[right], &heap->data[largest]) > 0)
         largest = right;
 
     if (largest != i) {

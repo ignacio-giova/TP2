@@ -71,17 +71,19 @@ int verificarPalabra(const char *palabra, Filtro *filtro) {
     }
     
     // Verificar letras amarillas
-     for(int i = 0; i < 5 && filtro->letrasAmarillas[i].letra != '_'; i++){
+    for (int i = 0; i < TAM_PALABRA; i++) {
+    if (filtro->letrasAmarillas[i].letra != '_') {  // Solo verificar si hay letra amarilla
         int encontro = 0;
-        for (int j= 0; j < TAM_PALABRA && !encontro; j++){
-            if (filtro->letrasAmarillas[i].posiciones[j] //Verifica que sea una posicion posible de la letra
-            && filtro->letrasAmarillas[i].letra == palabra[j] //Verifica que las letras sean iguales
-            && filtro->letrasVerdes[j] == '_') // Verifica que no sea una letra verde
-            encontro = 1;
+        for (int j = 0; j < TAM_PALABRA && !encontro; j++) {
+            if (filtro->letrasAmarillas[i].posiciones[j] 
+                && palabra[j] == filtro->letrasAmarillas[i].letra) {
+                encontro = 1;
+            }
         }
         if (!encontro)
-            return 0;
-     }
+            return 0;  // Si no encuentra una letra amarilla, la palabra no es válida
+    }
+}
 
     // Verificamos letras no incluidas
     for (int i = 0; i < TAM_PALABRA; i++) {
@@ -107,7 +109,7 @@ Filtro* inicializarFiltro() {
     // Inicializar letras amarillas
     for (int i = 0; i < TAM_PALABRA; i++) {
         filtro->letrasAmarillas[i].letra = '_';  // Letra amarilla vacía
-        for (int j = 0; j < 5; j++) {
+        for (int j = 0; j < TAM_PALABRA; j++) {
             filtro->letrasAmarillas[i].posiciones[j] = 0; // Ninguna posición válida aún
         }
     }
@@ -121,7 +123,7 @@ Filtro* inicializarFiltro() {
 }
 
 void actualizarFiltro(Filtro *filtro, const char *palabra, const char *palabraSecreta){
-    char aux[5]; // Si hay un '_' significa que ya nos encargamos de esa letra
+    char aux[TAM_PALABRA]; // Si hay un '_' significa que ya nos encargamos de esa letra
     strcpy(aux, palabra);
 
     // Letras Verdes
